@@ -1,0 +1,31 @@
+name: test-net
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probar conexión a Aules
+        env:
+          RAW: ${{ secrets.AULES_CALENDARS }}
+        run: |
+          python3 - <<'EOF'
+          import os, json, subprocess, time
+          url = json.loads(os.environ["RAW"])[0]["url"]
+          t0 = time.time()
+          r = subprocess.run(
+              ["curl", "-s", "-o", "/tmp/out.ics", "-w", "%{http_code}",
+               "--max-time", "40", "-L", "-A",
+               "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36", url],
+              capture_output=True, text=True)
+          dt = time.time() - t0
+          print(f"HTTP: {r.stdout} | tiempo: {dt:.1f}s | curl err: {r.returncode}")
+          try:
+              body = open("/tmp/out.ics", "rb").read()
+              print(f"bytes: {len(body)}")
+              print("primeros 300:", body[:300])
+          except Exception as e:
+              print("sin cuerpo:", e)
+          EOF
