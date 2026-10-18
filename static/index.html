@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0e1117">
+  <meta name="description" content="Dashboard de entregas de Aules">
+  <title>Aules Dashboard</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1>🎓 Aules Dashboard</h1>
+      <span id="updated-at" class="updated"></span>
+    </div>
+    <div class="topbar-right">
+      <div class="stats">
+        <span class="stat"><b id="stat-total">0</b> pendientes</span>
+        <span class="stat stat-urgent"><b id="stat-urgent">0</b> urgentes</span>
+      </div>
+      <button id="btn-refresh" title="Actualizar ahora">↻</button>
+      <button id="btn-tv" title="Modo TV">📺</button>
+    </div>
+  </header>
+
+  <div id="error-banner" class="error-banner hidden"></div>
+
+  <main id="tasks" class="grid" aria-live="polite"></main>
+
+  <div id="empty" class="empty hidden">
+    <p>🎉 No hay tareas pendientes</p>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

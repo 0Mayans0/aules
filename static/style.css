@@ -1,0 +1,167 @@
+:root {
+  --bg: #0e1117;
+  --card: #1e222a;
+  --card-border: #2d3139;
+  --text: #ffffff;
+  --muted: #b0b3b8;
+  --urgent: #f44336;
+  --warning: #ff9800;
+  --ok: #4caf50;
+  --accent: #3b82f6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--card-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar h1 { font-size: 1.4rem; }
+
+.topbar-right { display: flex; align-items: center; gap: 1rem; }
+
+.stats { display: flex; gap: 0.75rem; }
+.stat { color: var(--muted); font-size: 0.95rem; }
+.stat b { color: var(--text); }
+.stat-urgent b { color: var(--urgent); }
+
+.updated { color: var(--muted); font-size: 0.85rem; }
+
+button {
+  background: var(--card-border);
+  color: var(--text);
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+button:hover { filter: brightness(1.25); }
+button.active { background: var(--accent); }
+
+/* ---------- Grid de tarjetas ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 6px solid var(--ok);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.card.urgent { border-left-color: var(--urgent); }
+.card.warning { border-left-color: var(--warning); }
+
+.card-subject {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.card-meta { color: var(--muted); font-size: 0.95rem; }
+
+.card-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-height: 4.5em;
+  overflow: hidden;
+}
+
+.countdown {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.countdown .unit {
+  background: var(--card-border);
+  border-radius: 10px;
+  padding: 0.4rem 0.7rem;
+  text-align: center;
+  min-width: 4rem;
+}
+
+.countdown .num { font-size: 1.3rem; font-weight: 700; }
+.countdown .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+
+.card.urgent .countdown .num { color: var(--urgent); }
+.card.warning .countdown .num { color: var(--warning); }
+.card.ok .countdown .num { color: var(--ok); }
+
+/* ---------- Estados ---------- */
+.empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 1.4rem;
+  padding: 4rem 1rem;
+}
+
+.error-banner {
+  background: rgba(244, 67, 54, 0.15);
+  border-bottom: 2px solid var(--urgent);
+  color: var(--urgent);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- Móvil ---------- */
+@media (max-width: 600px) {
+  .topbar { padding: 0.75rem 1rem; }
+  .topbar h1 { font-size: 1.1rem; }
+  .grid { padding: 1rem; grid-template-columns: 1fr; }
+  .countdown .unit { min-width: 3.4rem; }
+}
+
+/* ---------- Modo TV ---------- */
+body.tv .grid { grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); gap: 1.5rem; padding: 2rem; }
+body.tv .topbar h1 { font-size: 2rem; }
+body.tv .stat { font-size: 1.3rem; }
+body.tv .updated { font-size: 1.1rem; }
+body.tv .card { padding: 2rem; }
+body.tv .card-title { font-size: 1.8rem; }
+body.tv .card-subject { font-size: 1.15rem; }
+body.tv .card-meta { font-size: 1.25rem; }
+body.tv .card-desc { display: none; }
+body.tv .countdown .num { font-size: 1.8rem; }
+body.tv .countdown .lbl { font-size: 0.85rem; }
+body.tv .countdown .unit { min-width: 5.5rem; padding: 0.6rem 1rem; }
+body.tv button { font-size: 1.5rem; padding: 0.6rem 1.1rem; }
